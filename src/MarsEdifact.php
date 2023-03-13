@@ -37,7 +37,7 @@ class MarsEdifact
 
         $ediMsgArray = [];
         $ediMsgArray[] = ["UNB", ["UNOY", "3"], $sender, $receiver, [date("ymd"), date("Hi")], $code];
-        $ediMsgArray[] = ["UNH", $msgNr, "IFTSTA", "D", "01B", "UN"];
+        $ediMsgArray[] = ["UNH", $msgNr, ["IFTSTA", "D", "01B", "UN"]];
         $ediMsgArray[] = ["BGM", "7", $documentNr, "9"];
         $ediMsgArray[] = ["DTM", ["137", date("YmdHis"), "204"]];
         $ediMsgArray[] = ["NAD", "FP", "15066960", "87"];
