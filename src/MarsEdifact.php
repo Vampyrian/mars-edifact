@@ -34,6 +34,7 @@ class MarsEdifact
         $receiver = $reader->readUNBInterchangeSender();
         $sender = $reader->readUNBInterchangeRecipient();
         $documentNr = $reader->readEdiDataValue('BGM', 2);
+        $toNr = $reader->readEdiDataValue('CNI', 2);
 
         $ediMsgArray = [];
         $ediMsgArray[] = ["UNB", ["UNOY", "3"], $sender, $receiver, [date("ymd"), date("Hi")], $code];
@@ -41,10 +42,10 @@ class MarsEdifact
         $ediMsgArray[] = ["BGM", "7", $documentNr, "9"];
         $ediMsgArray[] = ["DTM", ["137", date("YmdHis"), "204"]];
         $ediMsgArray[] = ["NAD", "FP", "15066960", "87"];
-        $ediMsgArray[] = ["CNI", "1", $documentNr];
+        $ediMsgArray[] = ["CNI", "1", $toNr];
         $ediMsgArray[] = ["STS", "1", $stsCode];
         $ediMsgArray[] = ["REF", ["CU", $documentNr]];
-        $ediMsgArray[] = ["REF", ["SRN", $documentNr]];
+        $ediMsgArray[] = ["REF", ["SRN", $toNr]];
         $ediMsgArray[] = ["UNT", "8", "1"];
         $ediMsgArray[] = ["UNZ", "1", $code];
 
