@@ -44,8 +44,8 @@ class MarsEdifact
         $ediMsgArray[] = ["NAD", "FP", "15066960", "87"];
         $ediMsgArray[] = ["CNI", "1", $toNr];
         $ediMsgArray[] = ["STS", "1", $stsCode];
-        $ediMsgArray[] = ["RFF", ["CU", $documentNr]];
-        $ediMsgArray[] = ["RFF", ["SRN", $toNr]];
+        $ediMsgArray[] = ["RFF", ["CU", $toNr]];
+        $ediMsgArray[] = ["RFF", ["SRN", $documentNr]];
         $ediMsgArray[] = ["UNT", "8", "1"];
         $ediMsgArray[] = ["UNZ", "1", $code];
 
