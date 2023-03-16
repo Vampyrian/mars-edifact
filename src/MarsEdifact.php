@@ -30,6 +30,11 @@ class MarsEdifact
         return $this->handleLoad($rawMsg, '13');
     }
 
+    public function delivered($rawMsg)
+    {
+        return $this->handleLoad($rawMsg, '21');
+    }
+
     private function handleLoad($rawMsg, $stsCode)
     {
         $reader = new Reader($rawMsg);
