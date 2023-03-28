@@ -35,7 +35,16 @@ class MarsEdifact
         return $this->handleLoad($rawMsg, '21');
     }
 
-    private function handleLoad($rawMsg, $stsCode)
+    public function bookingDateChangeWithTruckNumber($rawMsg, $dateString, $truckNumber)
+    {
+        $ediMsgArray = [];
+        $ediMsgArray[] = ["TDT", ["20"], [], ["30"], [], [], [], [], ["", "", "", $truckNumber]];
+        $ediMsgArray[] = ["DTM", ["133", date("YmdHi", strtotime($dateString)), 203]];
+
+        return $this->handleLoad($rawMsg, '97', $ediMsgArray);
+    }
+
+    private function handleLoad($rawMsg, $stsCode, $ediMsgIsert = [])
     {
         $reader = new Reader($rawMsg);
         $code = $reader->readEdiDataValue('UNB', 5);
@@ -56,7 +65,12 @@ class MarsEdifact
         $ediMsgArray[] = ["STS", "1", $stsCode];
         $ediMsgArray[] = ["RFF", ["CU", $toNr]];
         $ediMsgArray[] = ["RFF", ["SRN", $documentNr]];
-        $ediMsgArray[] = ["UNT", "8", "1"];
+
+        foreach ($ediMsgIsert as $ediMsg) {
+            $ediMsgArray[] = $ediMsg;
+        }
+
+        $ediMsgArray[] = ["UNT", (string) (count($ediMsgArray) - 1), "1"];
         $ediMsgArray[] = ["UNZ", "1", $code];
 
         $encodedString = new \EDI\Encoder($ediMsgArray, true);
