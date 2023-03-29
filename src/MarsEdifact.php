@@ -35,11 +35,11 @@ class MarsEdifact
         return $this->handleLoad($rawMsg, '21');
     }
 
-    public function bookingDateChangeWithTruckNumber($rawMsg, $dateString, $truckNumber)
+    public function setTruckAndTrailerNumber($rawMsg, $truckNumber, $trailerNumber)
     {
         $ediMsgArray = [];
         $ediMsgArray[] = ["TDT", ["20"], [], ["30"], [], [], [], [], ["", "", "", $truckNumber]];
-        $ediMsgArray[] = ["DTM", ["133", date("YmdHi", strtotime($dateString)), 203]];
+        $ediMsgArray[] = ["EQD", ["AQ"], [$trailerNumber]];
 
         return $this->handleLoad($rawMsg, '97', $ediMsgArray);
     }
